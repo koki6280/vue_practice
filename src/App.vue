@@ -11,13 +11,9 @@
   </keep-alive>
     <div style="padding: 10rem;">
       <h2>イベントのフォーム</h2>
-      <label for="title">タイトル</label>
-      <input 
-        id="title" 
-        type="text"
-        v-model.lazy="eventData.title"
-      >
-      <pre>{{ eventData.title }}</pre>
+      
+      <EventTitle v-model="eventData.title"></EventTitle>
+      
       
       <label for="maxNumber">最大人数</label>
       <input 
@@ -96,10 +92,16 @@
       <label for="free">有料</label>
 
       <p>開催場所</p>
-      <select>
-        <option>東京</option>
-        <option>大阪</option>
+      <select 
+        v-model="eventData.location"
+        multiple
+      >
+        <option
+          v-for="location in locations"
+          :key="location"
+        >{{ location }}</option>
       </select>
+      <p>{{ eventData.location }}</p>
     </div>
   </div>
 </template>
@@ -108,12 +110,14 @@
 import LikeHeader from "./components/LikeHeader.vue";
 import About from "./components/About.vue";
 import Home from "./components/Home.vue";
+import EventTitle from "./components/EventTitle.vue";
 
 export default {
   data() {
     return {
       number: 14,
       currentComponent: "Home",
+      locations: ["東京", "大阪", "名古屋"],
       eventData: {
         title: "",
         maxNumber: 0,
@@ -121,14 +125,16 @@ export default {
         detail: "",
         isPrivate: false,
         target: [],
-        price: "無料"
+        price: "無料",
+        location: []
       }
     };
   },
   components: {
     LikeHeader,
     About,
-    Home
+    Home,
+    EventTitle
   },
   methods: {
     incrementNumber(value) {
