@@ -9,6 +9,7 @@ Vue.filter("upperCase", function(value) {
 });
 
 
+
 new Vue({
   render: h => h(App),
 }).$mount('#app');
